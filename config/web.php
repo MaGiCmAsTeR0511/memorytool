@@ -55,6 +55,23 @@ $config = [
     'params' => $params,
 ];
 
+if (file_exists(__DIR__ . '/common.php')) {
+    $commonConfig = require __DIR__ . '/common.php';
+    $config = array_replace_recursive($config, $commonConfig);
+}
+
+if (file_exists(__DIR__ . '/local.php')) {
+    $localConf = require __DIR__ . '/local.php';
+    $config = array_replace_recursive($config, $localConf);
+}
+
+if (file_exists(__DIR__ . '/params_local.php')) {
+    $localConf = require __DIR__ . '/params_local.php';
+    $config['params'] = array_replace_recursive($config['params'], $localConf);
+}
+
+
+
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';

@@ -9,7 +9,7 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
@@ -43,14 +43,12 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
@@ -60,14 +58,14 @@ if (file_exists(__DIR__ . '/common.php')) {
     $config = array_replace_recursive($config, $commonConfig);
 }
 
-if (file_exists(__DIR__ . '/local.php')) {
-    $localConf = require __DIR__ . '/local.php';
+if (file_exists(__DIR__ . '/dblocal.php')) {
+    $localConf = require __DIR__ . '/dblocal.php';
     $config = array_replace_recursive($config, $localConf);
 }
 
 if (file_exists(__DIR__ . '/params_local.php')) {
-    $localConf = require __DIR__ . '/params_local.php';
-    $config['params'] = array_replace_recursive($config['params'], $localConf);
+    $paramsConf = require __DIR__ . '/params_local.php';
+    $config['params'] = array_replace_recursive($config['params'], $paramsConf);
 }
 
 
@@ -77,15 +75,15 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+            // uncomment the following to add your IP if you are not connecting from localhost.
+            //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+            // uncomment the following to add your IP if you are not connecting from localhost.
+            //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
 

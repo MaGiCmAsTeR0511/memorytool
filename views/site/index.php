@@ -11,7 +11,7 @@ $events = array();
   $Event = new \yii2fullcalendar\models\Event();
   $Event->id = 2;
   $Event->title = 'Testing';
-  $Event->start = date('Y-m-d\Th:m:s\Z',strtotime('tomorrow 6am'));
+  $Event->start = date('Y-m-d\Th:m:s\Z',strtotime('tomorrow 6am')); 
   $events[] = $Event;
 
 use yii2fullcalendar\yii2fullcalendar;

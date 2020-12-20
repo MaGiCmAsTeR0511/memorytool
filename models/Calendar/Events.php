@@ -8,9 +8,11 @@ use Yii;
  * This is the model class for table "Events".
  *
  * @property int $id
- * @property string $text
- * @property string $von
- * @property string $bis
+ * @property string $title
+ * @property int $allDay
+ * @property string $start
+ * @property string $end
+ * @property string $color
  */
 class Events extends \yii\db\ActiveRecord
 {
@@ -36,11 +38,11 @@ class Events extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'text', 'von', 'bis'], 'required'],
-            [['id'], 'integer'],
-            [['von', 'bis'], 'safe'],
-            [['text'], 'string', 'max' => 255],
-            [['id'], 'unique'],
+            [['title', 'allDay', 'start', 'end', 'color'], 'required'],
+            [['allDay'], 'integer'],
+            [['start', 'end'], 'safe'],
+            [['title'], 'string', 'max' => 500],
+            [['color'], 'string', 'max' => 7],
         ];
     }
 
@@ -51,9 +53,11 @@ class Events extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'text' => Yii::t('app', 'Text'),
-            'von' => Yii::t('app', 'Von'),
-            'bis' => Yii::t('app', 'Bis'),
+            'title' => Yii::t('app', 'Title'),
+            'allDay' => Yii::t('app', 'All Day'),
+            'start' => Yii::t('app', 'Start'),
+            'end' => Yii::t('app', 'End'),
+            'color' => Yii::t('app', 'Color'),
         ];
     }
 

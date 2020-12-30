@@ -9,7 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\Calendar\Events;
+use app\models\Memory\Memory;
 
 class SiteController extends Controller {
 
@@ -85,22 +85,22 @@ class SiteController extends Controller {
         return $this->goHome();
     }
 
-    public function actionCreateevent() {
+    public function actionCreatememory() {
 
-        $model = new Events();
+        $model = new Memory();
         if ($model->load(Yii::$app->request->post())) {
-            $model->start = date('Y-m-d h:i:s', strtotime($model->start));
-            $model->end = date('Y-m-d h:i:s', strtotime($model->end));
             if ($model->save()) {
                 Yii::$app->session->setFlash('Eventsaved');
                 return $this->refresh();
+            } else {
+                Yii::$app->session->setFlash("Eventnotsaved");
             }
         } else {
-            Yii::$app->session->setFlash("Eventnotsaved");
+            
         }
 
-
-        return $this->render('createevent', ['model' => $model]);
+die('hier');
+        return $this->render('creatememory', ['model' => $model]);
     }
 
     /**
@@ -115,18 +115,14 @@ class SiteController extends Controller {
 
             return $this->refresh();
         }
+
         return $this->render('contact', [
                     'model' => $model,
         ]);
     }
 
     public function actionIndex() {
-        $eventsdb = Events::find()->all();
-        foreach($eventsdb as $ed){
-            $event = new \yii2fullcalendar\models\Event
-        }
-        
-        return $this->render('index', ['events' => $events]);
+        return $this->render('index');
     }
 
     /**

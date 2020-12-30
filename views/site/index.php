@@ -1,9 +1,6 @@
 <?php
 
-use yii2fullcalendar\yii2fullcalendar;
 use yii\helpers\Html;
 ?>
-<?= Html::a('create Event', ['createevent']) ?>
+<?= Html::a(Yii::t('app', 'create Memory'), ['creatememory']) ?>
 
-<?= yii2fullcalendar::widget(['events' => $events, 'options' => ['locale' => 'de-de']])
-?>

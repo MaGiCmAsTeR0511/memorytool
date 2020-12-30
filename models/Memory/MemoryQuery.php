@@ -1,13 +1,13 @@
 <?php
 
-namespace app\models\Calendar;
+namespace app\models\Memory\Memory;
 
 /**
- * This is the ActiveQuery class for [[Events]].
+ * This is the ActiveQuery class for [[Memory]].
  *
- * @see Events
+ * @see Memory
  */
-class EventsQuery extends \yii\db\ActiveQuery
+class MemoryQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class EventsQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Events[]|array
+     * @return Memory[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class EventsQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return Events|array|null
+     * @return Memory|array|null
      */
     public function one($db = null)
     {

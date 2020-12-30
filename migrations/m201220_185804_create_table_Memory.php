@@ -5,11 +5,11 @@ use yii\db\Migration;
 /**
  * Class m201220_185804_create_table_Events
  */
-class m201220_185804_create_table_Events extends Migration
+class m201220_185804_create_table_Memory extends Migration
 {
      public function init()
     {
-        $this->db = 'dbcalendar';
+        $this->db = 'dbmemory';
         parent::init();
     }
     
@@ -18,14 +18,14 @@ class m201220_185804_create_table_Events extends Migration
         $tableOptions = 'ENGINE=InnoDB';
 
         $this->createTable(
-            '{{%Events}}',
+            '{{%Memory}}',
             [
                 'id'=> $this->primaryKey(11),
-                'title'=> $this->string(500)->notNull(),
-                'allDay'=> $this->boolean()->notNull(),
-                'start'=> $this->datetime()->notNull(),
-                'end'=> $this->datetime()->notNull(),
-                'color' => $this->string(7)->notNull(),
+                'ma_nr'=> $this->integer(5)->notNull(),
+                'ma_name' => $this->string(100)->notNull(),
+                'date'=> $this->date()->notNull(),
+                'remind_date'=> $this->date()->notNull(),
+                'text' => $this->string(1000)->notNull(),
             ],$tableOptions
         );
 
@@ -33,7 +33,7 @@ class m201220_185804_create_table_Events extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('{{%Events}}');
+        $this->dropTable('{{%Memory}}');
     }
 
     /*

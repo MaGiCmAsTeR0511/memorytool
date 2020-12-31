@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\Memory\Memory;
+namespace app\models\Memory;
 
 /**
  * This is the ActiveQuery class for [[Memory]].

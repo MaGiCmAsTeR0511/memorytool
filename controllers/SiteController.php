@@ -5,11 +5,10 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 use app\models\Memory\Memory;
+use app\models\Memory\MemorySearch;
+use app\assets\MemoryAsset;
 
 class SiteController extends Controller {
 
@@ -54,84 +53,109 @@ class SiteController extends Controller {
     }
 
     /**
-     * Login action.
-     *
-     * @return Response|string
+     * Lists all Memory models.
+     * @return mixed
      */
-    public function actionLogin() {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-                    'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout() {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    public function actionCreatememory() {
-
-        $model = new Memory();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                Yii::$app->session->setFlash('Eventsaved');
-                return $this->refresh();
-            } else {
-                Yii::$app->session->setFlash("Eventnotsaved");
-            }
-        } else {
-            
-        }
-
-die('hier');
-        return $this->render('creatememory', ['model' => $model]);
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact() {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-
-        return $this->render('contact', [
-                    'model' => $model,
-        ]);
-    }
-
     public function actionIndex() {
-        return $this->render('index');
+        $searchModel = new MemorySearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
-     * Displays about page.
-     *
-     * @return string
+     * Displays a single Memory model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionAbout() {
-        return $this->render('about');
+    public function actionView($id) {
+        return $this->render('view', [
+                    'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new Memory model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate() {
+        $model = new Memory();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->date = date('Y-m-d', strtotime($model->date));
+            $model->remind_date = date('Y-m-d', strtotime($model->remind_date));
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
+
+        return $this->render('create', [
+                    'model' => $model,
+        ]);
+    }
+
+    /**
+     * Updates an existing Memory model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id) {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+                    'model' => $model,
+        ]);
+    }
+
+    /**
+     * Deletes an existing Memory model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDelete($id) {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    public function actionReport() {
+        MemoryAsset::register($this->view);
+        if (Yii::$app->request->post() && Yii::$app->request->isAjax) {
+            die();
+        }
+
+
+        return $this->render('reportindex', []);
+    }
+
+    /**
+     * Finds the Memory model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Memory the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id) {
+        if (($model = Memory::findOne($id)) !== null) {
+            $model->date = Yii::$app->formatter->asDate($model->date);
+            $model->remind_date = Yii::$app->formatter->asDate($model->remind_date);
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
 }

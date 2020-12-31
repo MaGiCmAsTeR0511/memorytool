@@ -21,7 +21,9 @@
         "kriss/yii2-calendar-schedule": "^1.0",
         "marekpetras/yii2-calendarview-widget": "^1.0",
         "philippfrenzel/yii2fullcalendar":"3.9.0",
-        "kartik-v/yii2-widget-colorinput": "*"
+        "kartik-v/yii2-widget-colorinput": "*",
+        "kartik-v/yii2-widget-datepicker": "@dev",
+        "kartik-v/yii2-field-range": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

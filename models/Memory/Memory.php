@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\Memory\Memory;
+namespace app\models\Memory;
 
 use Yii;
 
@@ -38,7 +38,7 @@ class Memory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ma_nr', 'ma_name', 'datum', 'remind_date', 'text'], 'required'],
+            [['ma_nr', 'ma_name', 'date', 'remind_date', 'text'], 'required'],
             [['ma_nr'], 'integer'],
             [['date', 'remind_date'], 'safe'],
             [['ma_name'], 'string', 'max' => 100],

@@ -134,7 +134,7 @@ class SiteController extends Controller {
     public function actionReport() {
         MemoryAsset::register($this->view);
         if (Yii::$app->request->post() && Yii::$app->request->isAjax) {
-            die();
+            die('asdasdasdasd');
         }
 
 

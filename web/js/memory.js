@@ -17,7 +17,7 @@ $(document).ready(function(e) {
                         );
                 $("#csv").prop("disabled", true);
             },
-            url: "/y/jrk/auswertung/csv",
+            url: form.attr('action'),
             type: "POST",
             data: dataform,
             xhrFields: {

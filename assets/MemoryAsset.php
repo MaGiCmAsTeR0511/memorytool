@@ -27,6 +27,8 @@ class MemoryAsset extends AssetBundle {
         'js/memory.js'
     ];
     public $depends = [
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
     ];
 
 }
